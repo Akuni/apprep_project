@@ -1,4 +1,4 @@
-package td1;
+package fr.unice.polytech;
 
 public class ResultatSousClasse extends Resultat {
 	private int entier;

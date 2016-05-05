@@ -1,4 +1,4 @@
-package td1;
+package fr.unice.polytech;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
