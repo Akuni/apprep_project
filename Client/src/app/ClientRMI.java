@@ -1,5 +1,6 @@
-package fr.unice.polytech;
+package app;
 
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -18,16 +19,13 @@ public class ClientRMI {
 			System.out.println("Security manager alread in place ...");
 			System.out.println("Done !");
 		}
+
 		try {
-			Distante id = null;
-			try {
-				id = (Distante) Naming.lookup("rmi://localhost:2000/Hello");
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			}
-			Resultat r = id.sayResultat();
-			System.out.println(r.toString());
-			
+			ICommunication id = (ICommunication) Naming.lookup("rmi://localhost:2000/Hello");
+			Serializable res = id.lookup("first");
+			System.out.println(res.toString());
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		} catch (NotBoundException e) {

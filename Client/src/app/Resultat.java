@@ -1,4 +1,4 @@
-package fr.unice.polytech;
+package app;
 
 import java.io.Serializable;
 
