@@ -45,8 +45,14 @@ La JVM du client nécessite la configuration suivante :
 `-Djava.security.policy=java.policy ` qui permet de configurer la gestion des connexions aux serveurs. De base tout le monde est accepté puisque le fichier java.policy contient ` grant { permission java.security.AllPermission; } ;`.
 
 ##### Configuration du Serveur
-La JVM du serveur nécessite la configuration suivante : 
-`-Djava.rmi.server.hostname=xxx.xxx.xxx.xxx ` qui permet de configurer l'adresse IP à laquelle le serveur sera affecté.
+La JVM du serveur nécessite la configuration suivante:
+`-Djava.rmi.server.hostname="xxx.xxx.xxx.xxx"` qui permet de configurer l'adresse IP à laquelle le serveur sera affecté.
+
+##### Configuration du RMIRegistry
+Le rmiregistry doit être lancé en se plaçant dans le repertoire parent du package "fr.unice.polytech" avec la commande suivante permettant de le lancer sur le port 2000 :
+```shell
+> rmiregistry 2000
+```
 ----------------------------------
 
 ## Explication de la solution
