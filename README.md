@@ -46,7 +46,7 @@ La JVM du client nécessite la configuration suivante :
 
 ##### Configuration du Serveur
 La JVM du serveur nécessite la configuration suivante : 
-`-Djava.rmi.server.hostname="xxx.xxx.xxx.xxx"` qui permet de configurer l'adresse IP à laquelle le serveur sera affecté.
+`-Djava.rmi.server.hostname="xxx.xxx.xxx.xxx ` qui permet de configurer l'adresse IP à laquelle le serveur sera affecté.
 ----------------------------------
 
 ## Explication de la solution
