@@ -23,7 +23,7 @@ public class Servor extends UnicastRemoteObject implements Distante{
 	}
 
 	public Resultat sayResultat() throws RemoteException {
-		ResultatSousClasse r = new ResultatSousClasse(10, "hello");
+		Resultat r = new Resultat();
 		r.i = 5001;
 		return r;
 	}

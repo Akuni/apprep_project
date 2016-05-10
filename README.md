@@ -4,6 +4,7 @@
 ## Sommaire
 
 * Rappel du sujet
+* Configuration
 * Explication de la solution
 
 
@@ -35,6 +36,17 @@ Ainsi votre client est un client JMS, en plus d'être client d'un service RMI (l
 
 &nbsp;&nbsp;&nbsp;&nbsp;Pour illustrer l'aspect générique de votre registre, vous coderez plusieurs serveurs et plusieurs clients (des méthodes main possibles) pour un domaine d'application de votre choix (après tout, votre innovation est de vendre un registre ayant des propriétés utiles pour n'importe quelle problématique de mise en relation d'usagers) : par exemple, mettant en relation des vendeurs/acheteurs de véhicules, ou de passionés de botanique qui répertorient des plantes rares (et donc, des fournisseurs de services qui permettent d'interroger ou répertorier telle ou telle espèce dans des bases de données adéquates), ou des services de petites annonces de type co-voiturage, entre particuliers ou utilisant des services payants qu'il faut donc contacter... Donc, selon les applications, ce ne seront pas forcément des classes nommées Donnee ou Service, mais tout autre nom. Encore une fois, l'aspect générique de votre registre permet de télécharger n'importe quelle classe dont il aura besoin et dont il n'a pas connaissance.
 
+----------------------------------
+
+## Configuration
+Afin de bien faire communiquer le client au RMIRegistry ainsi qu'aux différents serveurs, ces derniers nécessitent certaines configurations de leur JVM.
+##### Configuration du ClientRMI
+La JVM du client nécessite la configuration suivante :
+`-Djava.security.policy=java.policy ` qui permet de configurer la gestion des connexions aux serveurs. De base tout le monde est accepté puisque le fichier java.policy contient ` grant { permission java.security.AllPermission; } ;`.
+
+##### Configuration du Serveur
+La JVM du serveur nécessite la configuration suivante : 
+`-Djava.rmi.server.hostname="xxx.xxx.xxx.xxx"` qui permet de configurer l'adresse IP à laquelle le serveur sera affecté.
 ----------------------------------
 
 ## Explication de la solution

@@ -6,11 +6,17 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class ClientRMI {
-
+ 	//-Djava.rmi.server.hostname="192.168.0.13"
+	//-Djava.rmi.server.hostname="172.19.250.132"
 	
 	public static void main(String args[]) {
 		if (System.getSecurityManager() == null) {
+			System.out.println("Generating a new security manager ...");
 			System.setSecurityManager(new SecurityManager());
+			System.out.println("Done !");
+		} else {
+			System.out.println("Security manager alread in place ...");
+			System.out.println("Done !");
 		}
 		try {
 			Distante id = null;

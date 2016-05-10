@@ -9,7 +9,9 @@ public class TestRMI {
 		// -Djava.rmi.server.hostname="10.212.120.205"
 		try {
 			Servor s = new Servor();
+			System.out.println("Binding Hello ...");
 			Naming.rebind("rmi://localhost:2000/Hello", s);
+			System.out.println("Done ! ");
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
