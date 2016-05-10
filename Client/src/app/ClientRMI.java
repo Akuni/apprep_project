@@ -26,8 +26,8 @@ public class ClientRMI {
 
 		try {
 			ICommunication id = (ICommunication) Naming.lookup("rmi://localhost:2000/Hello");
-			Serializable res = id.lookup("first");
-			System.out.println(res.toString());
+			IData res = (IData) id.lookup("first");
+			System.out.println(res.getDataAsString());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (RemoteException e) {
