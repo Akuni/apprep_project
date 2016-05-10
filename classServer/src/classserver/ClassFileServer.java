@@ -1,5 +1,7 @@
 package classserver;
 
+import java.io.File;
+
 /**
  * The ClassFileServer implements a ClassServer that
  * reads class files from the file system. See the
@@ -100,6 +102,13 @@ public class ClassFileServer extends ClassServer {
    * </code>
    */
   public static void main(String args[]) {
+
+    /**
+     * VM options
+     * -Djava.rmi.server.hostname="127.0.0.1"
+     * Program arguments
+     * 1234 classServer/bin/
+     */
     int port = 0;
     String classpath = null;
     if (args.length >= 1) {
@@ -271,6 +280,9 @@ public class ClassFileServer extends ClassServer {
     java.io.File[] roots = new java.io.File[n];
     for (int i = 0; i < n; i++) {
       roots[i] = new java.io.File(st.nextToken());
+    }
+    for(File f : roots) {
+      System.out.println(f);
     }
     return roots;
   }

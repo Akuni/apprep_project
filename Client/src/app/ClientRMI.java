@@ -7,8 +7,12 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class ClientRMI {
- 	//-Djava.rmi.server.hostname="192.168.0.13"
-	//-Djava.rmi.server.hostname="172.19.250.132"
+
+	/**
+	 * VM options
+	 * -Djava.security.policy=java.policy -Djava.rmi.server.codebase=http://xxx:1234/
+	 * xxx = donné par le serveur de classe une fois lancé
+	 */
 	
 	public static void main(String args[]) {
 		if (System.getSecurityManager() == null) {
