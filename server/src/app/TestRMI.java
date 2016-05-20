@@ -5,7 +5,7 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 
 public class TestRMI {
-	/*public static void main(String args[]) {
+	public static void main(String args[]) {
 		// -Djava.rmi.server.hostname="10.212.120.205"
 		try {
 			Servor s = new Servor();
@@ -19,6 +19,6 @@ public class TestRMI {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}*/
+	}
 
 }

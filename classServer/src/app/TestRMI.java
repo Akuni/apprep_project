@@ -19,6 +19,7 @@ public class TestRMI {
 			Naming.rebind("rmi://localhost:2000/Hello", s);
 			System.out.println("Done ! ");
 			s.rebind("first", new Data("MY DATA !"));
+			s.rebind("service", new RentService("APPREP_TEAM"));
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {

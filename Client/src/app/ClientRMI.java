@@ -28,6 +28,8 @@ public class ClientRMI {
 			ICommunication id = (ICommunication) Naming.lookup("rmi://localhost:2000/Hello");
 			IData res = (IData) id.lookup("first");
 			System.out.println(res.getDataAsString());
+			IService service = (IService) id.lookup("service");
+			System.out.println(service.getInfo());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (RemoteException e) {
