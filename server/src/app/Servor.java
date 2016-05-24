@@ -8,40 +8,50 @@ import java.util.Map;
 
 public class Servor extends UnicastRemoteObject implements ICommunication {
 
-	Map<String, Serializable> map;
+    Map<String, Serializable> map;
 
-	public Servor(int numPort) throws RemoteException {
-		super(numPort);
-		map = new Hashtable<String, Serializable>();
-	}
-	
-	public Servor() throws RemoteException {
-		map = new Hashtable<String, Serializable>();
-	}
+    private QueueService qs ;
 
-	@Override
-	public boolean rebind(String key, Serializable serializable) {
-		System.out.println("Calling rebing method with " + key + " key !");
-		map.put(key, serializable);
-		return true;
-	}
+    public Servor(int numPort) throws RemoteException {
+        super(numPort);
+        map = new Hashtable<String, Serializable>();
+        qs = new QueueService();
+    }
 
-	@Override
-	public Serializable lookup(String key) {
-		if(map.containsKey(key)){
-			return map.get(key);
-		} else {
-			return null;
-		}
-	}
+    public Servor() throws RemoteException {
+        map = new Hashtable<String, Serializable>();
+        qs = new QueueService();
+    }
 
-	@Override
-	public String[] getSomeInformation(int amount) {
-		return new String[0];
-	}
+    @Override
+    public boolean rebind(String key, Serializable serializable) {
+        System.out.println("Calling rebing method with " + key + " key !");
+        map.put(key, serializable);
+        return true;
+    }
 
-	@Override
-	public String[] getSomeService(int amount) {
-		return new String[0];
-	}
+    @Override
+    public Serializable lookup(String key) {
+        if (map.containsKey(key)) {
+            return map.get(key);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public javax.jms.Queue getQueueServiceQueue()throws RemoteException {
+        qs.createQueue();
+        return qs.subscribeQueue();
+    }
+
+    @Override
+    public String[] getSomeInformation(int amount) {
+        return new String[0];
+    }
+
+    @Override
+    public String[] getSomeService(int amount) {
+        return new String[0];
+    }
 }

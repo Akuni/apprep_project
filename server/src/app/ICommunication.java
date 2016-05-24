@@ -6,16 +6,18 @@ import java.rmi.RemoteException;
 
 public interface ICommunication extends Remote {
 
-	public boolean rebind(String key, Serializable serializable) throws RemoteException;
+    public boolean rebind(String key, Serializable serializable) throws RemoteException;
 
 
-	public Serializable lookup(String key) throws RemoteException;
+    public Serializable lookup(String key) throws RemoteException;
 
 
-	// TODO really return string[] ? maybe a generic type "Data" ?
-	public String[] getSomeInformation(int amount) throws RemoteException;
+    javax.jms.Queue getQueueServiceQueue()throws RemoteException;
+
+    // TODO really return string[] ? maybe a generic type "app.Data" ?
+    public String[] getSomeInformation(int amount) throws RemoteException;
 
 
-	public String[] getSomeService(int amount) throws RemoteException;
+    public String[] getSomeService(int amount) throws RemoteException;
 
 }
