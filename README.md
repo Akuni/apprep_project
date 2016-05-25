@@ -74,9 +74,6 @@ Comme expliqué précédemment il y a donc quatre éléments distincts :
  * Un client qui peut utiliser ces services et ces données
  
 
-Dans un premier temps, concernant le serveur de classe, il s'agit ici d'un programme fournit qui assure le bon fonctionnement du téléchargement dynamique de classe.
-Nous n'aurons qu'à l'utiliser ainsi qu'à le paramétrer afin qu'il pointe vers un dossier contenant nos `.class` (dans notre projet le dossier porte le nom de classPool).
-
 #### Le serveur de classe 
 Le serveur de classe permet aux différents producteur/consommateur de télécharger les stubs des classes manquantes pour leur exécution.
 Nous devons le paramétrer afin qu'il pointe vers un dossier contenant nos `.class` (dans notre projet le dossier porte le nom de classPool).
@@ -98,6 +95,6 @@ Le serveur est donc un consommateur.
 
 ## Problemes Rencontrés
 
-Dans un premier temps nous avons rencontré une difficulté concernant la comprehension du sujet. En effet cela a pris du temps de passer a une conception, une architecture concrete apres avoir lever l'abstraction du sujet.
+Un des premier point clef a été la vision du projet. En effet cela a pris du temps de passer a une architecture, concrete apres avoir lever l'abstraction du sujet.
 
 Une deuxieme difficulté auras été le debugage des RemoteExceptions. Ces exceptions pouvans avoir des causes differente et varié il est souvent long d'en trouver la cause.
