@@ -5,6 +5,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import javax.jms.*;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
@@ -15,35 +16,28 @@ public class ServerMain {
      * -Djava.rmi.server.hostname="127.0.0.1" -Djava.rmi.server.codebase=http://xxx:1234/
      * xxx = donné par le serveur de classe une fois lancé
      */
-    private Connection connect = null;
-    private Session sendSession = null;
-    private MessageProducer sender = null;
-    private Queue queue = null;
+    private static Connection connect = null;
+    private static Session sendSession = null;
+    private static MessageProducer sender = null;
+    private static Queue queue = null;
 
     public static void main(String args[]) {
         try {
-            Servor s = new Servor();
-            System.out.println("Binding Hello ...");
-            Naming.lookup("Hello"); //("rmi://localhost:2000/Hello", s);
+            System.out.println("Getting Servor ...");
+            IServorCommunication s = (IServorCommunication) Naming.lookup("Servor");
             System.out.println("Done ! ");
             s.rebind("first", new Data("MY DATA !"));
             s.rebind("service", new RentService("APPREP_TEAM"));
 
-
-
             //QUEUE
-            new ServerMain().Config(s);
+            config(s);
 
-
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
+        } catch (RemoteException | MalformedURLException | NotBoundException e) {
             e.printStackTrace();
         }
     }
 
-    private void Config(Servor s) {
+    private static void config(IServorCommunication s) {
         try {
             ConnectionFactory factory;
             factory = new ActiveMQConnectionFactory("user", "password", "tcp://localhost:61616");
@@ -64,7 +58,7 @@ public class ServerMain {
         }
     }
 
-    private void configP(Servor s) throws JMSException {
+    private static void configP(IServorCommunication s) throws JMSException {
         sendSession = connect.createSession(false, Session.AUTO_ACKNOWLEDGE);
         try {
             queue = s.getQueueServiceQueue();
@@ -75,7 +69,7 @@ public class ServerMain {
         sender = sendSession.createProducer(queue);
     }
 
-    private void postMessageInQ(String mess) throws JMSException {
+    private static void postMessageInQ(String mess) throws JMSException {
         TextMessage msg = sendSession.createTextMessage();
         msg.setText(mess);
         sender.send(queue,msg);
