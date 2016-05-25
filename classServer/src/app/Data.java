@@ -1,11 +1,9 @@
 package app;
 
-import java.io.Serializable;
-
 /**
  * Created by SARROCHE Nicolas on 10/05/16.
  */
-public class Data implements Serializable, IData {
+public class Data implements IData {
 
     private static final long serialVersionUID = 1L;
     private String data;

@@ -9,5 +9,4 @@ public interface IService extends Serializable{
 
     public String getInfo();
 
-    //public ReponseService accesService();
 }

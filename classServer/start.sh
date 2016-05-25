@@ -3,4 +3,4 @@
 echo "Listing files"
 ls bin/* -R
 echo "Starting class server"
-java src/classserver/ClassFileServer.java 2000 bin/
+java src/classserver/ClassFileServer.java 2000

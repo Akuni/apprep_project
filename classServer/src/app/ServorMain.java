@@ -18,10 +18,7 @@ public class ServorMain {
 			System.out.println("Binding Servor ...");
 			Naming.rebind("rmi://localhost:2000/Servor", s);
 			System.out.println("Done ! ");
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
+		} catch (RemoteException | MalformedURLException e) {
 			e.printStackTrace();
 		}
 	}

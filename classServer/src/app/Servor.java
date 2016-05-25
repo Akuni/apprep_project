@@ -3,20 +3,22 @@ package app;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Hashtable;
-import java.util.Map;
+import java.util.*;
 
-public class Servor extends UnicastRemoteObject implements ICommunication {
+public class Servor extends UnicastRemoteObject implements IServorCommunication {
 
     Map<String, Serializable> map;
+    private Set<Enregistrement> historique;
+    private int id = 0;
+
 
     private QueueService qs ;
 
     public Servor(int numPort) throws RemoteException {
         super(numPort);
         map = new Hashtable<String, Serializable>();
+        historique = new TreeSet<>();
         qs = new QueueService();
-
     }
 
     public Servor() throws RemoteException {
@@ -28,17 +30,92 @@ public class Servor extends UnicastRemoteObject implements ICommunication {
     @Override
     public boolean rebind(String key, Serializable serializable) {
         System.out.println("Calling rebing method with " + key + " key !");
+        historique.add(new Enregistrement(id,key));
         map.put(key, serializable);
         return true;
     }
 
     @Override
     public Serializable lookup(String key) {
+        for(Enregistrement e : historique){
+            if(e.getClé().equals(key))
+                e.increment();
+        }
         if (map.containsKey(key)) {
             return map.get(key);
         } else {
             return null;
         }
+    }
+
+    @Override
+    public List<Object> getLast(int x) throws RemoteException {
+        if(x > map.size())
+            x = map.size();
+        List<Object> lasts = new ArrayList<>();
+        for(Enregistrement e : historique){
+            if(e.getId() >= x)
+                lasts.add(map.get(e.getClé()));
+        }
+        return lasts;
+    }
+
+    @Override
+    public List<String> lastKeys(int x) throws RemoteException {
+        if(x > map.size())
+            x = map.size();
+        List<String> lasts = new ArrayList<>();
+
+        for(Enregistrement e : historique){
+            System.out.println(e.getId());
+            if(e.getId() >= x)
+                lasts.add(e.getClé());
+        }
+
+        return lasts;
+    }
+
+    @Override
+    public List<String> popularKeys(int x) throws RemoteException {
+        int max = 0;
+        List<String> popular = new ArrayList<>();
+        for (Enregistrement e : historique) {
+            if (e.getDemandes() == max) {
+                popular.add(e.getClé());
+            }
+            if (e.getDemandes() > max) {
+                max = e.getDemandes();
+                popular.clear();
+                popular.add(e.getClé());
+            }
+        }
+        return popular;
+    }
+
+    @Override
+    public List<Object> exactSearch(String type)throws RemoteException {
+        List<Object> objects = new ArrayList<>();
+        for (Map.Entry<String, Serializable> entry : map.entrySet()) {
+            if(entry.getValue().getClass().getName().equals(type)){
+                objects.add(entry.getValue());
+            }
+        }
+        return objects;
+
+    }
+
+    @Override
+    public List<Object> deepSearch(String type) throws RemoteException {
+        List<Object> objects = new ArrayList<>();
+        for (Map.Entry<String, Serializable> entry : map.entrySet()) {
+            boolean father = entry.getValue().getClass().getName().equals(type);
+            boolean son  = entry.getValue().getClass().getSuperclass().getName().equals(type);
+            if(father || son){
+                objects.add(entry.getValue());
+            }
+        }
+        return objects;
+
     }
 
     @Override
