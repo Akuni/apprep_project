@@ -34,7 +34,7 @@ public class ClientRMI implements MessageListener {
 		}
 
 		try {
-			ICommunication id = (ICommunication) Naming.lookup("rmi://localhost:2000/Hello");
+			IServorCommunication id = (IServorCommunication) Naming.lookup("rmi://localhost:2000/Servor");
 			IData res = (IData) id.lookup("first");
 			System.out.println(res.getDataAsString());
 			IService service = (IService) id.lookup("service");
@@ -54,7 +54,7 @@ public class ClientRMI implements MessageListener {
 		}
 	}
 
-	private void Config(ICommunication s) {
+	private void Config(IServorCommunication s) {
 		try {
 			ConnectionFactory factory;
 			factory = new ActiveMQConnectionFactory("user", "password", "tcp://localhost:61616");
@@ -70,7 +70,7 @@ public class ClientRMI implements MessageListener {
 		}
 	}
 
-	private void configC(ICommunication s) throws JMSException {
+	private void configC(IServorCommunication s) throws JMSException {
 		receiveSession = connect.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		Queue tQueue = null;
 		try {
