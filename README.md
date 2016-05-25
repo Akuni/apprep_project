@@ -6,6 +6,7 @@
 * Rappel du sujet
 * Configuration
 * Explication de la solution
+* Problemes rencontrés
 
 
 ---------------
@@ -40,21 +41,52 @@ Ainsi votre client est un client JMS, en plus d'être client d'un service RMI (l
 
 ## Configuration
 Afin de bien faire communiquer le client au RMIRegistry ainsi qu'aux différents serveurs, ces derniers nécessitent certaines configurations de leur JVM.
+
+##### Configuration du ClassServer
+Le programme necessite comme argument :
+###### 1 - Aucun argument
+###### 2 - un seul argument representant le port
+###### 3 - deux argument representant le port est le lien vers les .class de l'application
+#
+#
+
 ##### Configuration du ClientRMI
 La JVM du client nécessite la configuration suivante :
-`-Djava.security.policy=java.policy ` qui permet de configurer la gestion des connexions aux serveurs. De base tout le monde est accepté puisque le fichier java.policy contient ` grant { permission java.security.AllPermission; } ;`.
+`-Djava.security.policy=java.policy ` , `-Djava.rmi.server.codebase=http://xxx.xxx.xxx.xxx:1234` qui permet de configurer la gestion des connexions aux serveurs. De base tout le monde est accepté puisque le fichier java.policy contient ` grant { permission java.security.AllPermission; } ;`.
 
 ##### Configuration du Serveur
 La JVM du serveur nécessite la configuration suivante:
-`-Djava.rmi.server.hostname="xxx.xxx.xxx.xxx"` qui permet de configurer l'adresse IP à laquelle le serveur sera affecté.
+`-Djava.rmi.server.hostname="xxx.xxx.xxx.xxx"` (en general `localhost`) qui permet de configurer l'adresse IP à laquelle le serveur sera affecté.
 
 ##### Configuration du RMIRegistry
-Le rmiregistry doit être lancé en se plaçant dans le repertoire parent du package "fr.unice.polytech" avec la commande suivante permettant de le lancer sur le port 2000 :
+Le rmiregistry doit être lancé en se plaçant dans le repertoire parent du package "app" avec la commande suivante permettant de le lancer sur le port 2000 :
 ```shell
 > rmiregistry 2000
 ```
 ----------------------------------
 
 ## Explication de la solution
+
+Comme expliqué précédemment il y a donc quatre éléments distincts :
+ * Un serveur de class permettant le telechargement dynamic de classes 
+ * Un UniversalRegistry qui contient une hashmap de services et de données
+ * Un serveur qui peut déposer des services et des données
+ * Un client qui peut utiliser ces services et ces données
+ 
+
+Dans un premier temps, concernant le serveur de classe, il s'agit ici d'un programme fournit qui assure le bon fonctionnement du téléchargement dynamique de classe.
+Nous n'aurons qu'à l'utiliser ainsi qu'à le paramétrer afin qu'il pointe vers un dossier contenant nos `.class`.
+
+#### Le serveur de classe 
+Le serveur de classe permet aux différents clients de télécharger les classes manquantes pour l'exécution du code.
+
+#### Le servor
+Le servor permet de stocker les services ainsi que les données dans des Map. A chaque appel d'un client pour obtenir un service ou une donnée, il suffira alors d'incrémenter le bon enregistrement pour les garder trier, avant de lui envoyer la référence du service ou la copie de la donnée. 
+
+#### Le Serveur
+Le serveur implémente l'interface `ICommunication` et peut déposer des objets dans le Servor en utilisant la méthode `rebind` fournie par l'interface.  
+
+#### Le Client
+Le client utilise lui aussi l'interface
 
 

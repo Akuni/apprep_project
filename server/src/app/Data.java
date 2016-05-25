@@ -7,9 +7,10 @@ import java.io.Serializable;
  */
 public class Data implements Serializable {
 
+    static final long serialVersionUID = 1L;
     private String data;
 
-    public Data(String data){
+    public Data(String data) {
         this.data = data;
     }
 

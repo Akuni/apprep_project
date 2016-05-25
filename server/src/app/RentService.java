@@ -8,7 +8,7 @@ public class RentService implements IService {
     static final long serialVersionUID = 1L;
     private String teamName;
 
-    public RentService(String name){
+    public RentService(String name) {
         teamName = name;
     }
 
