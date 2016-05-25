@@ -74,19 +74,27 @@ Comme expliqué précédemment il y a donc quatre éléments distincts :
  * Un client qui peut utiliser ces services et ces données
  
 
-Dans un premier temps, concernant le serveur de classe, il s'agit ici d'un programme fournit qui assure le bon fonctionnement du téléchargement dynamique de classe.
-Nous n'aurons qu'à l'utiliser ainsi qu'à le paramétrer afin qu'il pointe vers un dossier contenant nos `.class`.
-
 #### Le serveur de classe 
-Le serveur de classe permet aux différents clients de télécharger les classes manquantes pour l'exécution du code.
+Le serveur de classe permet aux différents producteur/consommateur de télécharger les stubs des classes manquantes pour leur exécution.
+Nous devons le paramétrer afin qu'il pointe vers un dossier contenant nos `.class` (dans notre projet le dossier porte le nom de classPool).
 
 #### Le servor
-Le servor permet de stocker les services ainsi que les données dans des Map. A chaque appel d'un client pour obtenir un service ou une donnée, il suffira alors d'incrémenter le bon enregistrement pour les garder trier, avant de lui envoyer la référence du service ou la copie de la donnée. 
+Le servor permet de stocker les services ainsi que les données dans une Map. A chaque appel d'un client pour obtenir un service ou une donnée, il suffira alors d'incrémenter le bon enregistrement pour les garder trier, avant de lui envoyer la référence du service ou la copie de la donnée. 
 
 #### Le Serveur
-Le serveur implémente l'interface `ICommunication` et peut déposer des objets dans le Servor en utilisant la méthode `rebind` fournie par l'interface.  
+Le serveur implémente l'interface `IServorCommunication` et peut déposer des objets, des services, et meme des queues JMS dans la HastmMap du Servor en utilisant la méthode `rebind` fournie par l'interface (ce qui ecrasera l'objet s'il existe deja).
+Le serveur est donc un producteur.
 
 #### Le Client
-Le client utilise lui aussi l'interface
+Le client implémente l'interface `IServorCommunication` et peut recupérer des objets, des services, et meme s'inscrire dans une queues JMS afin d'en lire les messages se trouvant dans la HashMap du Servor en utilisant la méthode `lookup` fournie par l'interface.
+Le serveur est donc un consommateur.
 
 
+
+----------------------------------
+
+## Problemes Rencontrés
+
+Un des premier point clef a été la vision du projet. En effet cela a pris du temps de passer a une architecture, concrete apres avoir lever l'abstraction du sujet.
+
+Une deuxieme difficulté auras été le debugage des RemoteExceptions. Ces exceptions pouvans avoir des causes differente et varié il est souvent long d'en trouver la cause.
